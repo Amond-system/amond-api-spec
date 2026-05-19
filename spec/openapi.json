@@ -1,0 +1,40 @@
+{
+  "version": "3",
+  "info": {
+    "title": "Amond HTTP API",
+    "description": "",
+    "version": "1.0"
+  },
+  "servers": {
+    "url": "https://api.amonds.net"
+  },
+  "paths": {
+    "/v1/bans/{id_type}/{user_id}": {
+      "get": {
+        "responses": {
+          "200": {},
+          "400": {}
+        }
+      }
+    },
+    "/v1/bans": {
+      "patch": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ip": {
+                    "type": "string"
+                  }
+                },
+                "required": [ "id" ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
