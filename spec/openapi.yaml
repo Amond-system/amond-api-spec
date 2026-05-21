@@ -1,0 +1,49 @@
+openapi: 3.0.3
+
+info:
+  title: Amond HTTP API
+  description: Open API for Amond HTTP
+  version: 1.0.0
+
+servers:
+  - url: https://api.amonds.net/v1
+
+paths:
+  /bans:
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ip:
+                  type: string
+              required:
+                - ip
+        required: true
+      responses:
+        "200":
+          description: user data is updated
+        "400":
+          description: can't update
+      deprecated: false
+  /bans/{id_type}/{user_id}:
+    parameters:
+      - name: id_type
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        "200":
+          description: user isn't banned
+        "400":
+          description: user is banned
+      deprecated: false
