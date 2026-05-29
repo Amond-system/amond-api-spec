@@ -1,0 +1,149 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Amond API",
+    "description": "Open API for Amond API",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.amonds.net/"
+    }
+  ],
+  "paths": {
+    "/ban/{id_type}/{id}": {
+      "get": {
+        "tags": [
+          "presentation_web::globalban"
+        ],
+        "operationId": "is_ban_user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id_type",
+            "in": "path",
+            "description": "mcid pfid xuid deviceid or ip",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "check user is global bannned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IsBannedUser"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid request params"
+          }
+        }
+      }
+    },
+    "/ban/{id}": {
+      "post": {
+        "tags": [
+          "presentation_web::globalban"
+        ],
+        "operationId": "add_ban_user_data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "API Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBanUserData"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "400": {
+            "description": "invalid id, payload size or body"
+          },
+          "401": {
+            "description": "invalid token"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "server side error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddBanUserData": {
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "IsBannedUser": {
+        "type": "object",
+        "required": [
+          "globalban"
+        ],
+        "properties": {
+          "globalban": {
+            "type": "boolean"
+          },
+          "globalban_id": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}
